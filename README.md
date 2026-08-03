@@ -1,5 +1,6 @@
 # `caliper`
 
+[![CI](https://github.com/caliper-hq/caliper/actions/workflows/ci.yml/badge.svg)](https://github.com/caliper-hq/caliper/actions/workflows/ci.yml)
 [![GitHub License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![Go Version](https://img.shields.io/badge/Go-1.26%2B-00ADD8.svg)](https://golang.org)
 [![Org](https://img.shields.io/badge/Org-caliper--hq-orange.svg)](https://github.com/caliper-hq)
