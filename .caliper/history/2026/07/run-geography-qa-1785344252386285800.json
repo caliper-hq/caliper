@@ -1,0 +1,118 @@
+{
+  "run_id": "geography-qa-1785344252386285800",
+  "timestamp": "2026-07-29T16:57:32.3862858Z",
+  "dataset_id": "geography-qa",
+  "config_version": "1.0",
+  "synced": true,
+  "telemetry": {
+    "avg_latency_ms": 1,
+    "total_latency_ms": 0,
+    "cost_usd": 0,
+    "overall_score": 1,
+    "passed": true,
+    "eval_count": 6,
+    "passed_count": 6,
+    "failed_count": 0,
+    "skipped_count": 0
+  },
+  "results": [
+    {
+      "evaluator_id": "regex-capitals",
+      "passed": true,
+      "score": {
+        "raw": 1,
+        "normalized": 1,
+        "weight": 1
+      },
+      "latency_ms": 0,
+      "details": {
+        "matched": true,
+        "pattern": "(?i)paris|tokyo",
+        "response_snippet": "The capital of France is Paris and the capital of Japan is Tokyo."
+      }
+    },
+    {
+      "evaluator_id": "length-check",
+      "passed": true,
+      "score": {
+        "raw": 1,
+        "normalized": 1,
+        "weight": 0.5
+      },
+      "latency_ms": 0,
+      "details": {
+        "matched": true,
+        "pattern": "^.{1,500}$",
+        "response_snippet": "The capital of France is Paris and the capital of Japan is Tokyo."
+      }
+    },
+    {
+      "evaluator_id": "regression-check",
+      "passed": true,
+      "score": {
+        "raw": 1,
+        "normalized": 1,
+        "weight": 1
+      },
+      "latency_ms": 0,
+      "details": {
+        "baseline_avg_latency": 0,
+        "baseline_cost_usd": 0,
+        "baseline_overall_score": 1,
+        "baseline_run_id": "geography-qa-1785344219176142200",
+        "current_avg_latency": 0,
+        "current_cost_usd": 0,
+        "current_overall_score": 1
+      }
+    },
+    {
+      "evaluator_id": "regex-capitals",
+      "passed": true,
+      "score": {
+        "raw": 1,
+        "normalized": 1,
+        "weight": 1
+      },
+      "latency_ms": 0,
+      "details": {
+        "matched": true,
+        "pattern": "(?i)paris|tokyo",
+        "response_snippet": "The capital of France is Paris and the capital of Japan is Tokyo."
+      }
+    },
+    {
+      "evaluator_id": "length-check",
+      "passed": true,
+      "score": {
+        "raw": 1,
+        "normalized": 1,
+        "weight": 0.5
+      },
+      "latency_ms": 0,
+      "details": {
+        "matched": true,
+        "pattern": "^.{1,500}$",
+        "response_snippet": "The capital of France is Paris and the capital of Japan is Tokyo."
+      }
+    },
+    {
+      "evaluator_id": "regression-check",
+      "passed": true,
+      "score": {
+        "raw": 1,
+        "normalized": 1,
+        "weight": 1
+      },
+      "latency_ms": 0,
+      "details": {
+        "baseline_avg_latency": 0,
+        "baseline_cost_usd": 0,
+        "baseline_overall_score": 1,
+        "baseline_run_id": "geography-qa-1785344219176142200",
+        "current_avg_latency": 0,
+        "current_cost_usd": 0,
+        "current_overall_score": 1
+      }
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+# Binaries
+*.exe
+*.exe.
+*.dll
+*.so
+*.dylib
+caliper
+
+# Node / Dependencies
+node_modules/
+.next/
+dist/
+build/
+.cache/
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Environment / Secrets
+.env
+.env.local
+.env.*.local

@@ -1,0 +1,47 @@
+datasets:
+  - id: geography-qa
+    name: "Geography Q&A"
+    profile: mock-geography
+
+    budget:
+      max_latency_ms: 5000
+
+    regression:
+      max_latency_regression_pct: 100
+      max_score_regression_pct: 10
+      max_cost_regression_usd: 0.01
+
+    test_cases:
+      - id: tc-france-capital
+        prompt: "What is the capital of France?"
+        expected: "Paris"
+        tags: [geography, factual, smoke]
+
+      - id: tc-japan-capital
+        prompt: "What is the capital of Japan?"
+        expected: "Tokyo"
+        tags: [geography, factual]
+
+    evaluators:
+      - id: regex-capitals
+        type: regex
+        depends_on: []
+        weight: 1.0
+        params:
+          pattern: "(?i)paris|tokyo"
+
+      - id: length-check
+        type: regex
+        depends_on: [regex-capitals]
+        weight: 0.5
+        params:
+          pattern: "^.{1,500}$"
+
+      - id: regression-check
+        type: regression
+        depends_on: [regex-capitals, length-check]
+        weight: 1.0
+        params:
+          max_latency_regression_pct: 100.0
+          max_score_regression_pct: 10.0
+          max_cost_regression_usd: 0.01

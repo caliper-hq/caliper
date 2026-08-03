@@ -1,0 +1,35 @@
+version: "1.0"
+
+imports:
+  - "datasets/*.yml"
+
+profiles:
+  - name: openai-gpt4o
+    provider:
+      type: openai
+      model: gpt-4o
+      api_key_env: OPENAI_API_KEY
+      timeout_ms: 30000
+      params:
+        temperature: 0.0
+
+  - name: mock-geography
+    provider:
+      type: mock
+      params:
+        response: "The capital of France is Paris and the capital of Japan is Tokyo."
+
+  - name: mock-code
+    provider:
+      type: mock
+      params:
+        response: |
+          def fizzbuzz():
+              for i in range(1, 21):
+                  if i % 15 == 0: print('FizzBuzz')
+                  elif i % 3 == 0: print('Fizz')
+                  elif i % 5 == 0: print('Buzz')
+                  else: print(i)
+
+reporters:
+  - type: console

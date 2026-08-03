@@ -1,0 +1,24 @@
+datasets:
+  - id: code-generation
+    name: "Code Generation"
+    profile: mock-code
+
+    test_cases:
+      - id: tc-fizzbuzz
+        prompt: "Write a Python function that returns FizzBuzz for numbers 1-20."
+        tags: [code, python]
+
+    evaluators:
+      - id: contains-def
+        type: regex
+        depends_on: []
+        weight: 1.0
+        params:
+          pattern: "def\\s+\\w+"
+
+      - id: contains-fizz
+        type: regex
+        depends_on: [contains-def]
+        weight: 1.0
+        params:
+          pattern: "(?i)fizz"
