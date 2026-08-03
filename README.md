@@ -107,30 +107,88 @@ caliper sync --url http://localhost:3000 --project-id team-a
 
 ---
 
-## 📋 Configuration Format (`caliper.yml`)
+## 📋 Configuration & Dataset Specification
+
+Caliper separates infrastructure configuration (`caliper.yml`) from benchmark evaluation suites (`datasets/*.yml`).
+
+### 1. Root Configuration (`caliper.yml`)
+
+The root configuration defines **dataset file paths**, **LLM provider profiles**, and **reporters**:
 
 ```yaml
 version: "1.0"
-suite: "code-generation-benchmark"
-provider:
-  type: "mock" # or "openai"
-  model: "gpt-4o"
-dataset:
-  prompt: "Write a Go function that calculates Fibonacci numbers recursively."
 
-evaluators:
-  - id: "check_syntax"
-    type: "regex"
-    pattern: "func Fibonacci.*int"
-    weight: 1.0
+# Import dataset files using glob patterns
+imports:
+  - "datasets/*.yml"
 
-  - id: "performance_regression"
-    type: "regression"
-    depends_on: ["check_syntax"]
-    thresholds:
-      max_latency_increase_pct: 15.0
-      max_cost_usd: 0.05
+# Configure LLM Provider Profiles
+profiles:
+  - name: openai-gpt4o
+    provider:
+      type: openai
+      model: gpt-4o
+      api_key_env: OPENAI_API_KEY
+      params:
+        temperature: 0.0
+
+  - name: mock-code
+    provider:
+      type: mock
+      params:
+        response: |
+          def fizzbuzz():
+              for i in range(1, 21):
+                  if i % 15 == 0: print('FizzBuzz')
+                  elif i % 3 == 0: print('Fizz')
+                  elif i % 5 == 0: print('Buzz')
+                  else: print(i)
+
+# Active Output Reporters
+reporters:
+  - type: console
 ```
+
+---
+
+### 2. Dataset Evaluation File (`datasets/code-generation.yml`)
+
+Datasets define **test cases** (prompts, inputs, tags) and the **DAG evaluator pipeline** executed against model responses:
+
+```yaml
+datasets:
+  - id: code-generation
+    name: "Code Generation Benchmark"
+    profile: mock-code  # References profile from caliper.yml
+
+    # Array of evaluation test cases
+    test_cases:
+      - id: tc-fizzbuzz
+        prompt: "Write a Python function that returns FizzBuzz for numbers 1-20."
+        tags: [code, python]
+
+    # Concurrent DAG Evaluator Nodes
+    evaluators:
+      - id: contains-def
+        type: regex
+        depends_on: []
+        weight: 1.0
+        params:
+          pattern: "def\\s+\\w+"
+
+      - id: contains-fizz
+        type: regex
+        depends_on: [contains-def] # Executes only if contains-def passes
+        weight: 1.0
+        params:
+          pattern: "(?i)fizz"
+```
+
+#### Dataset Structure Components:
+- **`id` & `name`**: Unique identifier and display label for the dataset suite.
+- **`profile`**: Matches a provider profile defined in `caliper.yml` (e.g. `openai-gpt4o` or `mock-code`).
+- **`test_cases`**: The set of input prompts and metadata sent to the model provider.
+- **`evaluators`**: The DAG assertion rules applied to the provider response. `depends_on` specifies parent nodes that must pass before downstream nodes run.
 
 ---
 
