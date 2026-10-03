@@ -1,4 +1,4 @@
-module github.com/pranavkakde/caliper
+module github.com/caliper-hq/caliper
 
 go 1.26.4
 
